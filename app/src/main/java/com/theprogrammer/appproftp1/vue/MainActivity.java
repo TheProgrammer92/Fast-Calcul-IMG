@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         init();
 
-        this.controle =Controle.getInstance();
+
     }
 
     //propriété
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtTaille;
     private EditText txtAge;
     private RadioButton rdHomme;
+    private RadioButton rdFemme;
     private TextView lblIMG;
     private ImageView imgSmiley;
     private Controle controle;
@@ -47,9 +48,13 @@ public class MainActivity extends AppCompatActivity {
         txtTaille = findViewById(R.id.txtTaile);
         txtAge = findViewById(R.id.txtAge);
         rdHomme = findViewById(R.id.rdHomme);
+        rdFemme = findViewById(R.id.rdFemme);
         lblIMG = findViewById(R.id.lblMG);
         imgSmiley = findViewById(R.id.imgSmiley);
         btnCalc = findViewById(R.id.btnCalc);
+        this.controle =Controle.getInstance(this);
+       recupProfil();
+
 
 
         ecouteCalcul();
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     private void afficheResult(Integer poids, Integer taille, Integer age, Integer sexe) {
 
         //creation su profil et recuperation des information
-        this.controle.creerProfil(poids, taille, age, sexe);
+        this.controle.creerProfil(poids, taille, age, sexe,this);
 
         float img = this.controle.getImg();
         String message = this.controle.getMessage();
@@ -131,5 +136,30 @@ public class MainActivity extends AppCompatActivity {
 
         }
         lblIMG.setText(String.format("%.01f",img) + " : IMG " + message);
+    }
+
+    /**
+     * recuperation du profil si serialisé
+     */
+
+    private void recupProfil() {
+
+
+        if (controle.getPoids() !=null) {
+            txtPoids.setText(controle.getPoids());
+            txtTaille.setText(controle.getTaille().toString());
+            txtAge.setText(controle.getAge().toString());
+
+            rdFemme.setChecked(true);
+            if (controle.getSexe()==1) {
+
+                rdHomme.setChecked(true);
+
+            }
+            //simule le click sur le boutton calcule
+            ((Button)findViewById(R.id.btnCalc)).performClick();
+        }
+
+
     }
 }

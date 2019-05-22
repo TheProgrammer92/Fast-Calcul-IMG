@@ -1,5 +1,7 @@
 package com.theprogrammer.appproftp1.model;
 
+import java.util.Date;
+
 public class Profil {
 
 
@@ -17,10 +19,14 @@ public class Profil {
     private Integer sexe;
     private float img;
     private String message;
+    private Date dateMesure;
 
+    public Date getDateMesure() {
+        return dateMesure;
+    }
 
-    public Profil(Integer poids, Integer tailles, Integer age, Integer sexe) {
-
+    public Profil(Date dateMesure,Integer poids, Integer tailles, Integer age, Integer sexe) {
+        this.dateMesure =dateMesure;
         this.poids = poids;
         this.taille = tailles;
         this.age = age;
